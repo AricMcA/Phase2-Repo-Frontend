@@ -6,21 +6,29 @@ import TakeList from "./components/TakeList"
 
 function App() {
 
-  const [ takes, setTakes ] = useState([
-    { user: "user1", player:"player1", content:"content1" },
-    { user: "user2", player:"player2", content:"content2" },
-    { user: "user3", player:"player3", content:"content3" },
-    { user: "user4", player:"player4", content:"content4" },
-    { user: "user5", player:"player5", content:"content5" }
-  ])
+  const [ takes, setTakes ] = useState([])
 
   useEffect(()=> {
-    console.log('use effected')
+    fetch('http://localhost:3001/takes')
+      .then(resp => resp.json())
+      .then(takes => setTakes(takes))
   }, [])
 
-  const addTake = take => {
-    const newTakes = [ ...takes, take ];
-    setTakes(newTakes);
+  const addTake = (take) => {
+
+    fetch('http://localhost:3001/takes', {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify( take )
+    })
+      .then(resp => resp.json())
+      .then(take => {
+        const newTakes = [...takes, take];
+        setTakes(newTakes);
+      })
   }
 
   return (
