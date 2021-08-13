@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 
 
-const TakeForm = ({ addTake }) => {
+const TakeForm = ({ addTake, history }) => {
 
     const [ take, setTake ] = useState({
         user: '',
@@ -21,7 +21,7 @@ const TakeForm = ({ addTake }) => {
     const handleSubmit = event => {
         event.preventDefault();
         
-        addTake(take);
+        addTake(take, history);
         setTake({
             user:'',
             player:'',
@@ -30,7 +30,7 @@ const TakeForm = ({ addTake }) => {
     }
 
     return (
-        <>
+        <div className="form">
         <h3>Create a HotTake</h3>
         <form onSubmit={ handleSubmit }>
             <div>
@@ -48,7 +48,7 @@ const TakeForm = ({ addTake }) => {
             
             <input type="submit" value="Release HotTake" />
         </form>
-        </>
+        </div>
     )
 }
 

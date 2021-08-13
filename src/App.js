@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import NavBar from "./components/NavBar"
 import TakeForm from "./components/TakeFrom";
 import TakeList from "./components/TakeList" 
+import Home from "./components/Home";
+
 
 
 function App() {
@@ -14,7 +17,7 @@ function App() {
       .then(takes => setTakes(takes))
   }, [])
 
-  const addTake = (take) => {
+  const addTake = (take, history) => {
 
     fetch('http://localhost:3001/takes', {
       method: "POST",
@@ -28,20 +31,21 @@ function App() {
       .then(take => {
         const newTakes = [...takes, take];
         setTakes(newTakes);
+        history.push('/takes')
       })
   }
 
   return (
     <div className="App">
-      <NavBar />
+      <Router>
+        <NavBar />
 
-      <h1>Welcome to NFL Debater</h1>
-
-      <TakeForm addTake={ addTake } />
-
-      <TakeList takes={ takes } />
-
-      <footer>National Football League Debaters Co.</footer>
+          <Route exact path="/home" render={(props) => <Home /> } />
+          <Route exact path="/takes" render={ (props) => <TakeList { ...props } takes={ takes } /> } />
+          <Route exact path="/takes/new" render={ (props) => <TakeForm { ...props } addTake={ addTake } /> } />
+          
+        <footer>National Football League Debaters Co.</footer>
+      </Router>
     </div>
   );
 }

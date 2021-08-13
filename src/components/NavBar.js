@@ -1,10 +1,13 @@
+import { NavLink } from "react-router-dom"
 
-const NavBar = (props) => {
+
+const NavBar = () => {
     return (
-        <nav>
+        <nav className="NavBar">
             <ul>
-                <li><a href="#">Create HotTakes</a></li>
-                <li><a href="#">List HotTakes</a></li>
+                <NavLink to="/home">Home</NavLink><br/>
+                <NavLink to="/takes/new">Create HotTakes</NavLink><br/>
+                <NavLink to="/takes">List HotTakes</NavLink><br/>
             </ul>
         </nav>
     )
